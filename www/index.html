@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convertisseur Sciences</title>
+<title>Étalon — Convertisseur Sciences</title>
 <script src="config.js"></script>
 <style>
   :root{
@@ -12,6 +12,7 @@
     --ink:#20241F;
     --ink-soft:#565F52;
     --green:#2F6B4F;
+    --green-deep:#183A2C;
     --green-soft:#E4EEE6;
     --red:#B23A2E;
     --amber:#C9862B;
@@ -22,26 +23,55 @@
   body{
     background:var(--paper);
     background-image:
+      radial-gradient(circle at 50% 0%, rgba(47,107,79,0.07), transparent 55%),
       linear-gradient(var(--paper-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
-    background-size: 22px 22px;
+    background-size: 100% 100%, 22px 22px, 22px 22px;
     color:var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height:100vh;
-    padding:18px 14px 40px;
+    padding:28px 14px 40px;
     display:flex;
     justify-content:center;
+    align-items:flex-start;
   }
-  .card{ width:100%; max-width:420px; }
-  header{
+  .card{
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
+    background:var(--white);
+    border:1.5px solid var(--ink);
+    border-radius:20px;
+    box-shadow: 0 2px 0 var(--ink), 6px 8px 24px rgba(24,58,44,0.10);
+    padding:24px 20px 26px;
+  }
+  .brand{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    margin-bottom:4px;
+    gap:12px;
+    margin-bottom:14px;
   }
-  .eyebrow{
-    font-size:11px;
-    letter-spacing:.14em;
+  .brand-mark{
+    flex:0 0 auto;
+    width:44px; height:44px;
+    border-radius:12px;
+    background:var(--green-deep);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .brand-mark svg{ width:26px; height:26px; }
+  .brand-text{ flex:1; min-width:0; }
+  .brand-text .name{
+    font-family: Charter, Georgia, "Times New Roman", serif;
+    font-size:20px;
+    font-weight:700;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  .brand-text .tagline{
+    font-size:10.5px;
+    letter-spacing:.1em;
     text-transform:uppercase;
     color:var(--green);
     font-weight:700;
@@ -57,13 +87,6 @@
     transition:color .15s ease, transform .15s ease;
   }
   .star-btn.active{ color:var(--amber); transform:scale(1.1); }
-  h1{
-    font-family: Charter, Georgia, "Times New Roman", serif;
-    font-size:26px;
-    font-weight:700;
-    margin:2px 0 18px;
-    letter-spacing:-0.01em;
-  }
   .tabs{
     display:flex; gap:6px; overflow-x:auto; padding-bottom:6px;
     margin-bottom:18px; -webkit-overflow-scrolling:touch; scrollbar-width:none;
@@ -173,11 +196,26 @@
 </head>
 <body>
 <div class="card">
-  <header>
-    <span class="eyebrow">Terminale · Physique · Chimie</span>
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 100 100" fill="none">
+        <rect x="18" y="42" width="64" height="16" rx="8" transform="rotate(-22 50 50)" fill="#FCFDFB"/>
+        <g transform="rotate(-22 50 50)" stroke="#183A2C" stroke-width="2.5">
+          <line x1="26" y1="42" x2="26" y2="50"/>
+          <line x1="36" y1="42" x2="36" y2="52"/>
+          <line x1="46" y1="42" x2="46" y2="50"/>
+          <line x1="56" y1="42" x2="56" y2="52"/>
+          <line x1="66" y1="42" x2="66" y2="50"/>
+        </g>
+        <circle cx="79" cy="53" r="7" fill="#C9862B" transform="rotate(-22 50 50)"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <div class="name">Étalon</div>
+      <div class="tagline">Terminale · Physique · Chimie</div>
+    </div>
     <button class="star-btn" id="starBtn" title="Ajouter aux favoris" aria-label="Favoris">★</button>
-  </header>
-  <h1>Convertisseur Sciences</h1>
+  </div>
 
   <div class="tabs" id="tabs"></div>
 
@@ -512,28 +550,4 @@ copyBtn.addEventListener('click', async ()=>{
     copyBtn.classList.add('copied');
     setTimeout(()=>{ copyBtn.textContent = 'Copier'; copyBtn.classList.remove('copied'); }, 1400);
   }catch(e){
-    copyBtn.textContent = 'Copie manuelle';
-  }
-});
-
-valueEl.addEventListener('input', ()=>compute(false));
-unitFromEl.addEventListener('change', ()=>{ compute(true); });
-unitToEl.addEventListener('change', ()=>{ compute(true); });
-valueEl.addEventListener('change', ()=>compute(true));
-
-buildTabs();
-buildUnitSelects();
-compute(false);
-renderFavorites();
-renderHistory();
-
-// Lien de feedback (visible seulement si FEEDBACK_URL est rempli dans config.js)
-if(window.APP_CONFIG && window.APP_CONFIG.FEEDBACK_URL){
-  const link = document.getElementById('feedbackLink');
-  link.href = window.APP_CONFIG.FEEDBACK_URL;
-  link.style.display = 'block';
-}
-</script>
-<script src="ads.js"></script>
-</body>
-</html>
+    copyBtn.tex
