@@ -42,6 +42,17 @@ jobs:
       - name: Copier les fichiers web dans le projet Android
         run: npx cap sync android
 
+      - name: Déclarer l'ID AdMob dans le manifeste Android (obligatoire, sinon l'appli plante au démarrage)
+        run: |
+          python3 -c "
+          import re
+          path = 'android/app/src/main/AndroidManifest.xml'
+          content = open(path).read()
+          meta = '<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\" android:value=\"ca-app-pub-3940256099942544~3347511713\"/>'
+          content = re.sub(r'(<application[^>]*>)', r'\1\n        ' + meta, content, count=1)
+          open(path, 'w').write(content)
+          "
+
       - name: Installer Java
         uses: actions/setup-java@v4
         with:
