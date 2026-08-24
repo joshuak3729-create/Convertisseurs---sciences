@@ -39,6 +39,12 @@ jobs:
       - name: Ajouter la plateforme Android
         run: npx cap add android
 
+      - name: Générer l'icône et le splash screen (identité "Étalon")
+        run: |
+          base64 -d resources/icon.b64.txt > resources/icon.png
+          base64 -d resources/splash.b64.txt > resources/splash.png
+          npx @capacitor/assets generate --android
+
       - name: Copier les fichiers web dans le projet Android
         run: npx cap sync android
 
@@ -64,6 +70,13 @@ jobs:
 
       - name: Compiler l'APK
         working-directory: android
+        run: ./gradlew assembleDebug
+
+      - name: Mettre l'APK à disposition au téléchargement
+        uses: actions/upload-artifact@v4
+        with:
+          name: convertisseur-${{ matrix.variant }}
+          path: android/app/build/outputs/apk/debug/app-debug.apk
         run: ./gradlew assembleDebug
 
       - name: Mettre l'APK à disposition au téléchargement
