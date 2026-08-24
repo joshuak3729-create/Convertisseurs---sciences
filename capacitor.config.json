@@ -1,0 +1,6 @@
+{
+  "appId": "com.tonpseudo.convertisseursciences",
+  "appName": "Convertisseur Sciences",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
